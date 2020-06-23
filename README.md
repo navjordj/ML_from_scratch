@@ -1,1 +1,2 @@
-Implementation of machine learning models from scrath
+Implementation of machine learning models from scratch
+ 
