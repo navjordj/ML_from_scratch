@@ -30,12 +30,25 @@ class LogisticRegression():
         """Pass forward through the network
         """
         predictions = np.array([])
+        probabilities = np.array([])
+
+        if X.ndim == 1:
+            p = self._activation(self._net_input(X))
+            if  p >= 0.5:
+                prediction = 1
+            else:
+                prediction = 0
+            return prediction, p
+
+
         for x in X:
-            if self._activation(self._net_input(x)) >= 0.5:
+            p = self._activation(self._net_input(x))
+            if  p >= 0.5:
                 predictions = np.append(predictions, 1)
             else:
                 predictions = np.append(predictions, 0)
-        return predictions
+            probabilities = np.append(probabilities, p)
+        return predictions, probabilities
 
     def _net_input(self, X):
         return np.dot(X, self._w[1:]) + self._w[0]
