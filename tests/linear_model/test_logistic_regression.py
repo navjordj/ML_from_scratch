@@ -18,6 +18,6 @@ def test_lr(binary_dataset):
     
     scratch_lr = LogisticRegression(epochs=100, learning_rate=0.01)
     scratch_lr.fit(X_train, y_train)
-    scratch_preds = scratch_lr.predict(X_test)
+    scratch_preds, scratch_probs = scratch_lr.predict(X_test)
 
     assert (sklearn_preds == scratch_preds).all()
