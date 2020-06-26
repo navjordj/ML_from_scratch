@@ -1,9 +1,8 @@
 # Implement One VS all
-from linear_model import LogisticRegression
 import numpy as np 
 import copy
 
-class OneVSAll():
+class OneVSRest():
 
     def __init__(self, model, epochs, learning_rate):
         self.model = model(epochs, learning_rate)
@@ -50,6 +49,6 @@ if __name__ == "__main__":
     y = np.array([0, 1, 2])
 
     lr = LogisticRegression
-    ovsa = OneVSAll(lr, 1000, 0.01)
+    ovsa = OneVSRest(lr, 1000, 0.01)
     ovsa.fit(X, y)
     print(ovsa.predict(X))
