@@ -5,6 +5,8 @@ from sklearn import multiclass
 from src.onevsrest import OneVSRest
 from src.linear_model import LogisticRegression
 
+import pytest
+
 @pytest.mark.skip("Incorrect")
 def test_onevsrest():
     X = np.array([
