@@ -43,12 +43,3 @@ class OneVSRest():
             predictions.append(pred)
 
         return predictions
-
-if __name__ == "__main__":
-    X = np.array([[1, 1, 1], [2, 2, 2], [10, 10, 10]])
-    y = np.array([0, 1, 2])
-
-    lr = LogisticRegression
-    ovsa = OneVSRest(lr, 1000, 0.01)
-    ovsa.fit(X, y)
-    print(ovsa.predict(X))
