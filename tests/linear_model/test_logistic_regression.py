@@ -3,7 +3,7 @@ from sklearn import linear_model
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 
-from src.linear_model.logistic_regression import LogisticRegression
+from ml_from_scratch.linear_model.logistic_regression import LogisticRegression
 
 from ..datasets import binary_dataset
 

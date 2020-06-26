@@ -1,6 +1,6 @@
 
 from sklearn import decomposition
-from src.decomposition import PCA
+from ml_from_scratch.decomposition import PCA
 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split

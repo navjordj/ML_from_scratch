@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from sklearn import linear_model
-from src.regression.linear_regression import LinearRegression
+from ml_from_scratch.regression.linear_regression import LinearRegression
 from sklearn.datasets import make_regression
 
 @pytest.fixture

@@ -2,8 +2,8 @@ import numpy as np
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn import linear_model
 from sklearn import multiclass
-from src.onevsrest import OneVSRest
-from src.linear_model import LogisticRegression
+from ml_from_scratch.onevsrest import OneVSRest
+from ml_from_scratch.linear_model import LogisticRegression
 
 import pytest
 
