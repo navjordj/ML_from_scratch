@@ -13,9 +13,11 @@ class GradientDescent():
         self.w_update = None
 
 
-    def update(self, w, grad_wrt): # TODO add momentum for more efficent optimization
+    def update(self, w, grad_wrt): 
         if self.w_update is None:
             self.w_update = np.zeros(np.shape(w))
+
+        self.w_update = grad_wrt # TODO add momentum for more efficent optimization
 
         return w - self.learning_rate * self.w_update
 
