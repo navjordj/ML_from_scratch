@@ -30,6 +30,13 @@ class Dense(Layer):
         self.W_optimizer = copy.copy(optimizer)
         self.b_optimizer = copy.copy(optimizer)
 
+    def set_input_shape(self, shape):
+        self.input_shape = shape
+
+    def output_shape(self): # TODO make getter
+        return (self.units, )
+
+
     def forward(self, X, training=True):
         """Forward pass through the dense layer.
         Calculated using a dotproduct between input and weights and add bias
