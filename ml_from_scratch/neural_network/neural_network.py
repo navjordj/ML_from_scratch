@@ -26,14 +26,21 @@ def batch_iterator(X, y=None, batch_size=64):
 class NeuralNetwork():
 
 
-    def __init__(self, loss_function):
+    def __init__(self, optimizer, loss_function):
         self.layers = []
         self.loss_function = loss_function()
-
+        self.optimizer = optimizer
         self.errors = []
 
 
     def add_layer(self, layer: Layer):
+        if self.layers:
+            layer.set_input_shape(shape=self.layers[-1].output_shape())
+
+        # Initialize weights
+        if hasattr(layer, 'initialize'):
+            layer.initialize(optimizer=self.optimizer)
+
         self.layers.append(layer)
 
     def _forward(self, X, training=True):
@@ -60,7 +67,7 @@ class NeuralNetwork():
 
     def _backward(self, loss_grad):
         """
-        Loops backward through the layers and updates the gradients according to the loss
+        Back propagate through the layers and updates the gradients according to the loss
         """
 
         for layer in reversed(self.layers):
@@ -78,6 +85,8 @@ class NeuralNetwork():
             avg_batch_error = np.mean(batch_errors)
 
             self.errors.append(avg_batch_error)
+
+        return self.errors
 
     def predict(self, X):
         """Forward pass through network for predicting
