@@ -26,8 +26,11 @@ def batch_iterator(X, y=None, batch_size=64):
 class NeuralNetwork():
 
 
-    def __init__(self):
+    def __init__(self, loss_function):
         self.layers = []
+        self.loss_function = loss_function()
+
+        self.errors = []
 
 
     def add_layer(self, layer: Layer):
@@ -45,6 +48,16 @@ class NeuralNetwork():
 
         return layer_output
 
+    def _train_batch(self, X, y):
+        y_pred = self._forward(X)
+        loss = np.mean(self.loss_function.loss(X, y, y_pred))
+
+        loss_grad = self.loss_function.grad(y, y_pred)
+
+        self._backward(loss_grad = loss_grad)
+
+        return loss
+
     def _backward(self, loss_grad):
         """
         Loops backward through the layers and updates the gradients according to the loss
@@ -53,8 +66,18 @@ class NeuralNetwork():
         for layer in reversed(self.layers):
             layer_output = layer.backward(loss_grad)
 
-    def fit(self, X, y, epochs):
-        raise NotImplementedError()
+
+    def fit(self, X, y, n_epochs, batch_size):
+        
+        for _ in tqdm(range(n_epochs)):
+
+            batch_errors = []
+            for X_batch, y_batch in batch_iterator(X, y, batch_size=batch_size):
+                loss = self._train_batch(X, y)
+                batch_errors.append(loss)
+            avg_batch_error = np.mean(batch_errors)
+
+            self.errors.append(avg_batch_error)
 
     def predict(self, X):
         """Forward pass through network for predicting
