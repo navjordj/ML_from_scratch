@@ -30,7 +30,7 @@ class Dense(Layer):
         self.W_optimizer = copy.copy(optimizer)
         self.b_optimizer = copy.copy(optimizer)
 
-    def forward(self, X):
+    def forward(self, X, training=True):
         """Forward pass through the dense layer.
         Calculated using a dotproduct between input and weights and add bias
         """
@@ -41,6 +41,9 @@ class Dense(Layer):
         """Backward pass through the Dense layer
         Weights are updated using the optimizer
         """
+
+        W = self.W
+
         grad_w = self.layer_input.T.dot(accum_grad)
         grad_b = np.sum(accum_grad, axis=0, keepdims=True)
 
