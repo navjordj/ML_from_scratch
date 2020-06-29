@@ -8,3 +8,6 @@ def to_categorical(x, n_col=None):
     one_hot[np.arange(x.shape[0]), x] = 1
     return one_hot
 
+
+def to_nominal(x):
+    return np.argmax(x, axis=1)
