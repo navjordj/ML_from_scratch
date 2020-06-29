@@ -88,7 +88,12 @@ class NeuralNetwork():
 
         return self.errors
 
-    def predict(self, X):
+    def predict(self, X, argmax=True):
         """Forward pass through network for predicting
         """
-        return self._forward(X, training=False)
+        pred = self._forward(X, training=False)
+        #print(pred)
+        if argmax:
+            return np.argmax(pred, axis=1)
+        else:
+            return pred
