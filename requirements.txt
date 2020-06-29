@@ -2,3 +2,4 @@ numpy
 pytest
 flake8
 sklearn
+tqdm
