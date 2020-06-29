@@ -1,8 +1,6 @@
 import numpy as np 
 
 from .layers import Layer
-from .optimizer import GradientDescent
-from .activations import Sigmoid
 
 from tqdm import tqdm
 
@@ -37,10 +35,11 @@ class NeuralNetwork():
         if self.layers:
             layer.set_input_shape(shape=self.layers[-1].output_shape())
 
-        # Initialize weights
+        # If the layer has weights that needs to be initialized 
         if hasattr(layer, 'initialize'):
             layer.initialize(optimizer=self.optimizer)
 
+        # Add layer to the network
         self.layers.append(layer)
 
     def _forward(self, X, training=True):
@@ -57,12 +56,12 @@ class NeuralNetwork():
 
     def _train_batch(self, X, y):
         y_pred = self._forward(X)
-        loss = np.mean(self.loss_function.loss(X, y, y_pred))
 
-        loss_grad = self.loss_function.grad(y, y_pred)
+        loss = np.mean(self.loss_function.loss(y, y_pred))
 
-        self._backward(loss_grad = loss_grad)
+        loss_grad = self.loss_function.gradient(y, y_pred)
 
+        self._backward(loss_grad=loss_grad)
         return loss
 
     def _backward(self, loss_grad):
@@ -71,7 +70,7 @@ class NeuralNetwork():
         """
 
         for layer in reversed(self.layers):
-            layer_output = layer.backward(loss_grad)
+            loss_grad = layer.backward(loss_grad)
 
 
     def fit(self, X, y, n_epochs, batch_size):
@@ -80,8 +79,9 @@ class NeuralNetwork():
 
             batch_errors = []
             for X_batch, y_batch in batch_iterator(X, y, batch_size=batch_size):
-                loss = self._train_batch(X, y)
+                loss = self._train_batch(X_batch, y_batch)
                 batch_errors.append(loss)
+
             avg_batch_error = np.mean(batch_errors)
 
             self.errors.append(avg_batch_error)
