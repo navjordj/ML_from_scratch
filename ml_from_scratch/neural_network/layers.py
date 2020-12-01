@@ -64,6 +64,26 @@ class Dense(Layer):
         return accum_grad
 
 
+class RNN(Layer):
+
+    def __init__(self, units, vocab_size, input_shape):
+        self.units = units 
+        self.vocab_size = vocab_size
+        self.input_shape = input_shape
+
+        self.U = None
+        self.V = None
+        self.W = None
+
+    def initialize(self, optimizer):
+        pass
+
+    def forward(self, X, training=True):
+        pass 
+
+    def backward(self, accum_grad):
+        pass
+
 class Activation(Layer):
 
     def __init__(self, activaton_function):
