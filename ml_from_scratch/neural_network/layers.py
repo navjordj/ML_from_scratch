@@ -90,9 +90,14 @@ class RNN(Layer):
         self.V = np.random.uniform(-limit, limit, size=(self.word_dim, self.hidden_dim))
         self.W = np.random.uniform(-limit, limit, size=(self.hidden_dim, self.hidden_dim))
 
+        self.U_optimizer = copy.copy(optimizer)
+        self.V_optimizer = copy.copy(optimizer)
+        self.W_optimizer = copy.copy(optimizer)
 
     def forward(self, X, training=True):
-        pass 
+        batch_size, n_timesteps, input_dim = X.shape 
+
+        # Need to save hidden states to use them during backprop
 
     def backward(self, accum_grad):
         pass
