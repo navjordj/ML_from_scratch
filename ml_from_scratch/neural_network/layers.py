@@ -65,18 +65,31 @@ class Dense(Layer):
 
 
 class RNN(Layer):
+    """http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-2-implementing-a-language-model-rnn-with-python-numpy-and-theano/
 
-    def __init__(self, units, vocab_size, input_shape):
-        self.units = units 
-        self.vocab_size = vocab_size
-        self.input_shape = input_shape
+    Parameters
+    ----------
+    Layer : [type]
+        [description]
+    """
+
+    def __init__(self, word_dim, hidden_dim, bptt_truncate):
+        self.word_dim = word_dim # Size of vocabulary
+        self.hidden_dim = hidden_dim 
+        self.bptt_truncate = bptt_truncate
 
         self.U = None
         self.V = None
         self.W = None
 
     def initialize(self, optimizer):
-        pass
+
+        limit = 1 / np.sqrt(self.word_dim)
+
+        self.U = np.random.uniform(-limit, limit, size=(self.hidden_dim, self.word_dim))
+        self.V = np.random.uniform(-limit, limit, size=(self.word_dim, self.hidden_dim))
+        self.W = np.random.uniform(-limit, limit, size=(self.hidden_dim, self.hidden_dim))
+
 
     def forward(self, X, training=True):
         pass 
