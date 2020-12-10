@@ -72,6 +72,7 @@ class Dense(Layer):
         return accum_grad
 
 
+<<<<<<< HEAD
 class Conv2D(Layer):
 
     def __init__(self, n_filters, filter_shape, stride=1, padding=1):
@@ -115,6 +116,45 @@ class Conv2D(Layer):
         output_height = (height + np.sum(pad_h) - self.filter_shape[0]) / self.stride + 1
         output_width = (width + np.sum(pad_w) - self.filter_shape[1]) / self.stride + 1
         return self.n_filters, int(output_height), int(output_width) 
+=======
+class RNN(Layer):
+    """http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-2-implementing-a-language-model-rnn-with-python-numpy-and-theano/
+
+    Parameters
+    ----------
+    Layer : [type]
+        [description]
+    """
+
+    def __init__(self, word_dim, hidden_dim, bptt_truncate):
+        self.word_dim = word_dim # Size of vocabulary
+        self.hidden_dim = hidden_dim 
+        self.bptt_truncate = bptt_truncate
+
+        self.U = None
+        self.V = None
+        self.W = None
+
+    def initialize(self, optimizer):
+
+        limit = 1 / np.sqrt(self.word_dim)
+
+        self.U = np.random.uniform(-limit, limit, size=(self.hidden_dim, self.word_dim))
+        self.V = np.random.uniform(-limit, limit, size=(self.word_dim, self.hidden_dim))
+        self.W = np.random.uniform(-limit, limit, size=(self.hidden_dim, self.hidden_dim))
+
+        self.U_optimizer = copy.copy(optimizer)
+        self.V_optimizer = copy.copy(optimizer)
+        self.W_optimizer = copy.copy(optimizer)
+
+    def forward(self, X, training=True):
+        batch_size, n_timesteps, input_dim = X.shape 
+
+        # Need to save hidden states to use them during backprop
+
+    def backward(self, accum_grad):
+        pass
+>>>>>>> 399ff4ab206149cee72e795263e06cbe4362e4a2
 
 class Activation(Layer):
 
